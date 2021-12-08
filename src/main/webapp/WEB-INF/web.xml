@@ -11,14 +11,12 @@
         </listener-class>
     </listener>
     <servlet>
-        <servlet-name>ministry</servlet-name>
-        <servlet-class>
-            com.sun.xml.ws.transport.http.servlet.WSServlet
-        </servlet-class>
+        <servlet-name>employeeService</servlet-name>
+        <servlet-class>mni.ministry.mgmt.controllers.EmployeeController</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ministry</servlet-name>
+        <servlet-name>employeeService</servlet-name>
         <url-pattern>/api/ws/*</url-pattern>
     </servlet-mapping>
 </web-app>
