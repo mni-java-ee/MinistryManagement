@@ -1,10 +1,13 @@
 package mni.ministry.mgmt.services;
 
+import mni.ministry.mgmt.dao.EmployeeDAO;
 import mni.ministry.mgmt.models.Employee;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,14 +15,18 @@ import java.util.List;
 public class EmployeeService implements IEmployeeService {
     List<Employee> employees = new ArrayList<>();
 
+    @Inject
+    EmployeeDAO employeeDAO;
+
     @PostConstruct
-    public void init() {
+    public void init() throws SQLException {
+        employeeDAO.insertNewEmployee(new Employee("Bima Olga", "57594587549", "bimaol@gmail.com", 23));
         employees.add(new Employee(new BigInteger("1"), "Bima Olga", "57594587549", "bimaol@gmail.com", 23));
     }
 
     @Override
-    public Employee createNewEmployee(Employee employee) {
-        return null;
+    public Employee createNewEmployee(Employee employee) throws SQLException {
+        return employeeDAO.insertNewEmployee(employee);
     }
 
     @Override

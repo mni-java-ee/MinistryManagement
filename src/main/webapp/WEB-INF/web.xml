@@ -5,7 +5,7 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-    <listener>
+    <!--<listener>
         <listener-class>
             com.sun.xml.ws.transport.http.servlet.WSServletContextListener
         </listener-class>
@@ -13,10 +13,10 @@
     <servlet>
         <servlet-name>employeeService</servlet-name>
         <servlet-class>mni.ministry.mgmt.controllers.EmployeeController</servlet-class>
-        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>employeeService</servlet-name>
         <url-pattern>/api/ws/*</url-pattern>
     </servlet-mapping>
+    -->
 </web-app>
