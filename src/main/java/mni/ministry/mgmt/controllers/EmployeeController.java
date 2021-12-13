@@ -1,6 +1,8 @@
 package mni.ministry.mgmt.controllers;
 
+import mni.ministry.mgmt.dto.CreateNewEmpDto;
 import mni.ministry.mgmt.dto.EmployeeListDto;
+import mni.ministry.mgmt.models.Employee;
 import mni.ministry.mgmt.services.EmployeeService;
 
 import javax.inject.Inject;
@@ -8,6 +10,7 @@ import javax.jws.WebMethod;
 
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
+import java.sql.SQLException;
 
 @WebService(serviceName = "employeeService")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -21,5 +24,10 @@ public class EmployeeController {
         EmployeeListDto employeeListDto = new EmployeeListDto();
         employeeListDto.setEmployees(employeeService.fetchAllEmployee());
         return employeeListDto;
+    }
+
+    @WebMethod
+    public CreateNewEmpDto createNewEmployee(CreateNewEmpDto newEmployee) throws SQLException {
+        return employeeService.createNewEmployee(newEmployee);
     }
 }

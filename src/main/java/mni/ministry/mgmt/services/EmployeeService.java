@@ -1,6 +1,7 @@
 package mni.ministry.mgmt.services;
 
 import mni.ministry.mgmt.dao.EmployeeDAO;
+import mni.ministry.mgmt.dto.CreateNewEmpDto;
 import mni.ministry.mgmt.models.Employee;
 
 import javax.annotation.PostConstruct;
@@ -20,12 +21,12 @@ public class EmployeeService implements IEmployeeService {
 
     @PostConstruct
     public void init() throws SQLException {
-        employeeDAO.insertNewEmployee(new Employee("Bima Olga", "57594587549", "bimaol@gmail.com", 23));
-        employees.add(new Employee(new BigInteger("1"), "Bima Olga", "57594587549", "bimaol@gmail.com", 23));
+        //employeeDAO.insertNewEmployee(new CreateNewEmpDto("Bima Olga", "57594587549", "bimaol@gmail.com", 23));
+        //employees.add(new Employee(new BigInteger("1"), "Bima Olga", "57594587549", "bimaol@gmail.com", 23));
     }
 
     @Override
-    public Employee createNewEmployee(Employee employee) throws SQLException {
+    public CreateNewEmpDto createNewEmployee(CreateNewEmpDto employee) throws SQLException {
         return employeeDAO.insertNewEmployee(employee);
     }
 
