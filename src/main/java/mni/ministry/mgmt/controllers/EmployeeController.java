@@ -1,16 +1,17 @@
 package mni.ministry.mgmt.controllers;
 
 import mni.ministry.mgmt.dto.CreateNewEmpDto;
-import mni.ministry.mgmt.dto.EmployeeListDto;
 import mni.ministry.mgmt.models.Employee;
 import mni.ministry.mgmt.services.EmployeeService;
 
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebService(serviceName = "employeeService")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -20,14 +21,12 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @WebMethod
-    public EmployeeListDto getAllEmployee(){
-        EmployeeListDto employeeListDto = new EmployeeListDto();
-        employeeListDto.setEmployees(employeeService.fetchAllEmployee());
-        return employeeListDto;
+    public CreateNewEmpDto createNewEmployee(CreateNewEmpDto newEmployee) throws SQLException {
+        return employeeService.createNewEmployee(newEmployee);
     }
 
     @WebMethod
-    public CreateNewEmpDto createNewEmployee(CreateNewEmpDto newEmployee) throws SQLException {
-        return employeeService.createNewEmployee(newEmployee);
+    public List<Employee> getAllEmployee(@WebParam(name="pageNo") int pageNo, @WebParam(name="pageSize") int pageSize) throws SQLException {
+        return employeeService.fetchAllEmployee(pageNo, pageSize).getEmployees();
     }
 }

@@ -38,13 +38,13 @@ public class EmployeeDAO {
         return null;
     }
 
-    public Employee fetchEmployee() throws SQLException {
-        sql = "select * from tbl_employee where rownum = (select max(rownum) from tbl_employee)";
+    public ResultSet fetchEmployee(int pageNo, int pageSize) throws SQLException {
+        sql = "select * from employee offset nvl(pageNo-1,1)* pageSize  rows fetch next pageSize rows only";
         ps = connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
+
         if (rs.next()){
-            return new Employee(BigInteger.valueOf(rs.getInt("id")), rs.getString("empName"),
-                    rs.getString("empId"), rs.getString("empEmail"), rs.getInt("age"));
+            return rs;
         }
         return null;
     }
