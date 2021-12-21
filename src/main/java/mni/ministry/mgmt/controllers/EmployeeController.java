@@ -29,4 +29,14 @@ public class EmployeeController {
     public List<Employee> getAllEmployee(@WebParam(name="pageNo") int pageNo, @WebParam(name="pageSize") int pageSize) throws SQLException {
         return employeeService.fetchAllEmployee(pageNo, pageSize).getEmployees();
     }
+
+    @WebMethod
+    public Employee getEmployeeById(@WebParam(name="empId") String empId) throws SQLException {
+        return employeeService.fetchEmployeeById(empId);
+    }
+
+    @WebMethod
+    public int deleteEmployeeById(@WebParam(name="empId") String empId) throws SQLException {
+        return employeeService.deleteEmployeeById(empId);
+    }
 }

@@ -3,6 +3,8 @@ package mni.ministry.mgmt.dao;
 import mni.ministry.mgmt.db.DBConnection;
 import mni.ministry.mgmt.dto.CreateNewEmpDto;
 import mni.ministry.mgmt.models.Employee;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -17,7 +19,8 @@ public class EmployeeDAO {
     private String sql = "";
     private PreparedStatement ps = null;
     private Connection connection;
-    private int result;
+
+    private static final Logger LOG = LoggerFactory.getLogger(EmployeeDAO.class);
 
     @PostConstruct
     public void init(){
@@ -39,13 +42,24 @@ public class EmployeeDAO {
     }
 
     public ResultSet fetchEmployee(int pageNo, int pageSize) throws SQLException {
-        sql = "select * from employee offset nvl(pageNo-1,1)* pageSize  rows fetch next pageSize rows only";
+        sql = "select * from employee offset "+ (pageNo*pageSize)+" rows fetch next "+ pageSize+" rows only";
+        LOG.info("connection on fetchEmployee ===> "+ connection.getCatalog());
         ps = connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
+        LOG.info("ResultSet on fetchEmployee ===> "+ rs);
+        return rs;
+    }
 
-        if (rs.next()){
-            return rs;
-        }
-        return null;
+    public ResultSet fetchEmployeeById(String empId) throws SQLException {
+        sql = "select * from employee where empId="+empId;
+        ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();;
+        return rs;
+    }
+
+    public int deleteEmployeeById(String empId) throws SQLException{
+        sql = "delete from employee where empId="+empId;
+        ps = connection.prepareStatement(sql);
+        return ps.executeUpdate();
     }
 }

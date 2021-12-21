@@ -22,11 +22,4 @@ public class Employee {
     private String empId;
     private String empEmail;
     private Integer age;
-
-    public Employee(String empName, String empId, String empEmail, Integer age) {
-        this.empName = empName;
-        this.empId = empId;
-        this.empEmail = empEmail;
-        this.age = age;
-    }
 }
