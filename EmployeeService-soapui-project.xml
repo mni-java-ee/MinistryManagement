@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="17bb6ac3-79e7-420b-a316-9b3afdf59a86" activeEnvironment="Default" name="EmployeeService" resourceRoot="" soapui-version="5.6.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="d11d25b7-0947-4ab0-a0fd-7db06743924c" wsaVersion="NONE" name="employeeServiceSoapBinding" type="wsdl" bindingName="{http://controllers.mgmt.ministry.mni/}employeeServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://127.0.0.1:8080/MinistryManagement/employeeService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://127.0.0.1:8080/MinistryManagement/employeeService?wsdl"><con:part><con:url>http://127.0.0.1:8080/MinistryManagement/employeeService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="employeeService" targetNamespace="http://controllers.mgmt.ministry.mni/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://controllers.mgmt.ministry.mni/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://controllers.mgmt.ministry.mni/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="employees" type="tns:employee"/>
+      <xs:complexType name="createNewEmpDto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="age" type="xs:int"/>
+          <xs:element minOccurs="0" name="empEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="empId" type="xs:string"/>
+          <xs:element minOccurs="0" name="empName" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="employee">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:integer"/>
+          <xs:element minOccurs="0" name="empName" type="xs:string"/>
+          <xs:element minOccurs="0" name="empId" type="xs:string"/>
+          <xs:element minOccurs="0" name="empEmail" type="xs:string"/>
+          <xs:element minOccurs="0" name="age" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType final="#all" name="employeeArray">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:employee"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SQLException" type="tns:SQLException"/>
+      <xs:complexType name="SQLException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorCode" type="xs:int"/>
+          <xs:element minOccurs="0" name="sQLState" type="xs:string"/>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="deleteEmployeeById">
+    <wsdl:part name="empId" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEmployeeById">
+    <wsdl:part name="empId" type="xsd:string"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEmployeeByIdResponse">
+    <wsdl:part name="return" type="tns:employee"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllEmployeeResponse">
+    <wsdl:part name="return" type="tns:employeeArray"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteEmployeeByIdResponse">
+    <wsdl:part name="return" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SQLException">
+    <wsdl:part element="tns:SQLException" name="SQLException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNewEmployee">
+    <wsdl:part name="arg0" type="tns:createNewEmpDto"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNewEmployeeResponse">
+    <wsdl:part name="return" type="tns:createNewEmpDto"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllEmployee">
+    <wsdl:part name="pageNo" type="xsd:int"></wsdl:part>
+    <wsdl:part name="pageSize" type="xsd:int"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EmployeeController">
+    <wsdl:operation name="createNewEmployee">
+      <wsdl:input message="tns:createNewEmployee" name="createNewEmployee"></wsdl:input>
+      <wsdl:output message="tns:createNewEmployeeResponse" name="createNewEmployeeResponse"></wsdl:output>
+      <wsdl:fault message="tns:SQLException" name="SQLException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteEmployeeById">
+      <wsdl:input message="tns:deleteEmployeeById" name="deleteEmployeeById"></wsdl:input>
+      <wsdl:output message="tns:deleteEmployeeByIdResponse" name="deleteEmployeeByIdResponse"></wsdl:output>
+      <wsdl:fault message="tns:SQLException" name="SQLException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEmployeeById">
+      <wsdl:input message="tns:getEmployeeById" name="getEmployeeById"></wsdl:input>
+      <wsdl:output message="tns:getEmployeeByIdResponse" name="getEmployeeByIdResponse"></wsdl:output>
+      <wsdl:fault message="tns:SQLException" name="SQLException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllEmployee">
+      <wsdl:input message="tns:getAllEmployee" name="getAllEmployee"></wsdl:input>
+      <wsdl:output message="tns:getAllEmployeeResponse" name="getAllEmployeeResponse"></wsdl:output>
+      <wsdl:fault message="tns:SQLException" name="SQLException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="employeeServiceSoapBinding" type="tns:EmployeeController">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createNewEmployee">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="createNewEmployee">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createNewEmployeeResponse">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SQLException">
+        <soap:fault name="SQLException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteEmployeeById">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="deleteEmployeeById">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteEmployeeByIdResponse">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SQLException">
+        <soap:fault name="SQLException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEmployeeById">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getEmployeeById">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getEmployeeByIdResponse">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SQLException">
+        <soap:fault name="SQLException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAllEmployee">
+      <soap:operation soapAction="" style="rpc"/>
+      <wsdl:input name="getAllEmployee">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAllEmployeeResponse">
+        <soap:body namespace="http://controllers.mgmt.ministry.mni/" use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SQLException">
+        <soap:fault name="SQLException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="employeeService">
+    <wsdl:port binding="tns:employeeServiceSoapBinding" name="EmployeeControllerPort">
+      <soap:address location="http://localhost:8080/MinistryManagement/employeeService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/MinistryManagement/employeeService</con:endpoint></con:endpoints><con:operation id="77312b96-0392-4153-a3d6-f0a056a0917c" isOneWay="false" action="" name="createNewEmployee" bindingOperationName="createNewEmployee" type="Request-Response" outputName="createNewEmployeeResponse" inputName="createNewEmployee" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d38c6a86-56fa-46c3-81d2-01d0803a53e2" name="Create New Employee"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/MinistryManagement/employeeService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://controllers.mgmt.ministry.mni/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <con:createNewEmployee>\r
+         <arg0>\r
+            <!--Optional:-->\r
+            <age>23</age>\r
+            <!--Optional:-->\r
+            <empEmail>tikto@gmail.com</empEmail>\r
+            <!--Optional:-->\r
+            <empId>12147595</empId>\r
+            <!--Optional:-->\r
+            <empName>Tikto</empName>\r
+         </arg0>\r
+      </con:createNewEmployee>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://controllers.mgmt.ministry.mni/EmployeeController/createNewEmployee"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="95d9e233-8d85-411d-95b7-5547de64e05d" isOneWay="false" action="" name="getAllEmployee" bindingOperationName="getAllEmployee" type="Request-Response" outputName="getAllEmployeeResponse" inputName="getAllEmployee" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2f9e9323-929f-4e2a-89fe-1ccc923a77c7" name="GetAllEmployeeReq"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/MinistryManagement/employeeService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://controllers.mgmt.ministry.mni/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <con:getAllEmployee>\r
+         <pageNo>0</pageNo>\r
+         <pageSize>10</pageSize>\r
+      </con:getAllEmployee>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://controllers.mgmt.ministry.mni/EmployeeController/getAllEmployee"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="6bc5b212-5146-491e-837f-bd402544f121" isOneWay="false" action="" name="deleteEmployeeById" bindingOperationName="deleteEmployeeById" type="Request-Response" outputName="deleteEmployeeByIdResponse" inputName="deleteEmployeeById" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="23144c8a-bd52-4801-a93f-953e4ccbe042" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/MinistryManagement/employeeService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://controllers.mgmt.ministry.mni/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <con:deleteEmployeeById>\r
+         <empId>?</empId>\r
+      </con:deleteEmployeeById>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://controllers.mgmt.ministry.mni/EmployeeController/deleteEmployeeById"/></con:call></con:operation><con:operation id="4b1a8f6d-2fd4-4b53-9217-3da12aa38ece" isOneWay="false" action="" name="getEmployeeById" bindingOperationName="getEmployeeById" type="Request-Response" outputName="getEmployeeByIdResponse" inputName="getEmployeeById" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="80d2d565-7a95-4b11-93ff-a6a008b3c331" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/MinistryManagement/employeeService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:con="http://controllers.mgmt.ministry.mni/">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <con:getEmployeeById>\r
+         <empId>1212121</empId>\r
+      </con:getEmployeeById>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://controllers.mgmt.ministry.mni/EmployeeController/getEmployeeById"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

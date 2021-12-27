@@ -2,23 +2,25 @@ package mni.ministry.mgmt.dao;
 
 import mni.ministry.mgmt.db.DBConnection;
 import mni.ministry.mgmt.dto.CreateNewEmpDto;
-import mni.ministry.mgmt.models.Employee;
+import mni.ministry.mgmt.constants.PackageConstant;
+import mni.ministry.mgmt.dto.EmployeeOT;
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleType;
+import oracle.jdbc.OracleTypes;
+import oracle.sql.Datum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 @ApplicationScoped
 public class EmployeeDAO {
     private String sql = "";
     private PreparedStatement ps = null;
     private Connection connection;
+    private OracleCallableStatement oracleCallableStatement = null;
 
     private static final Logger LOG = LoggerFactory.getLogger(EmployeeDAO.class);
 
@@ -28,6 +30,18 @@ public class EmployeeDAO {
     }
 
     public CreateNewEmpDto insertNewEmployee(CreateNewEmpDto employee) throws SQLException {
+        oracleCallableStatement = (OracleCallableStatement)connection.prepareCall(PackageConstant.EMPLOYEE_SERVICE_PKG_FN_CREATE_NEW_EMPLOYEE);
+        oracleCallableStatement.setObject(1, new EmployeeOT(null, employee.getEmpName(), employee.getEmpId(), employee.getEmpEmail(), employee.getAge()));
+        oracleCallableStatement.registerOutParameter(2, Types.INTEGER);
+
+        if(oracleCallableStatement.executeUpdate() > 0){
+            oracleCallableStatement = null;
+            oracleCallableStatement = (OracleCallableStatement)connection.prepareCall(PackageConstant.EMPLOYEE_SERVICE_PKG_FN_FETCH_EMPLOYEE_BY_ID);
+            oracleCallableStatement.setObject(1, employee.getEmpId());
+            oracleCallableStatement.registerOutParameter(2, Types.JAVA_OBJECT);
+            Datum oracleObject = oracleCallableStatement.getOracleObject(2);
+        }
+
         sql = "insert into employee(empName, empId, empEmail, age) values(?,?,?,?)";
         ps = connection.prepareStatement(sql);
         ps.setString(1, employee.getEmpName());
